@@ -1,4 +1,5 @@
-import * as Haptics from "expo-haptics";
+import { Platform } from "react-native";
+const Haptics = { impactAsync: () => {}, notificationAsync: () => {}, ImpactFeedbackStyle: { Light: null }, NotificationFeedbackType: { Success: null } };
 import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
