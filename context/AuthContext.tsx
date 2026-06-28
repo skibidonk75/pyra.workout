@@ -1,5 +1,24 @@
 import { Session, User } from "@supabase/supabase-js";
-import * as ImagePicker from "expo-image-picker";
+import { Platform } from "react-native";
+// expo-image-picker is native only; stub for web
+const ImagePicker = Platform.OS === "web" ? {
+  requestMediaLibraryPermissionsAsync: async () => ({ status: "granted" }),
+  launchImageLibraryAsync: async (_opts: any) => {
+    return new Promise<any>((resolve) => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/*";
+      input.onchange = async (e: any) => {
+        const file = e.target.files[0];
+        if (!file) return resolve({ canceled: true, assets: [] });
+        const uri = URL.createObjectURL(file);
+        resolve({ canceled: false, assets: [{ uri, base64: null }] });
+      };
+      input.oncancel = () => resolve({ canceled: true, assets: [] });
+      input.click();
+    });
+  },
+} : require("expo-image-picker");
 import React, {
   createContext,
   useCallback,
@@ -7,7 +26,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Alert, Platform } from "react-native";
+import { Alert } from "react-native";
 import { supabase } from "@/lib/supabase";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
