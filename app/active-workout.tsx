@@ -1,4 +1,4 @@
-import * as Haptics from "expo-haptics";
+const Haptics = { notificationAsync: () => {}, NotificationFeedbackType: { Success: null } };
 import { Feather } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
