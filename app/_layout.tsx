@@ -4,9 +4,11 @@ import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { Platform, StyleSheet, View, useColorScheme } from "react-native";
 
+import { AuthProvider } from "@/context/AuthContext";
+import { WorkoutProvider } from "@/context/WorkoutContext";
 import { useColors } from "@/hooks/useColors";
 
-function ClassicTabLayout() {
+function TabLayout() {
   const colors = useColors();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
@@ -83,6 +85,12 @@ function ClassicTabLayout() {
   );
 }
 
-export default function TabLayout() {
-  return <ClassicTabLayout />;
+export default function RootLayout() {
+  return (
+    <AuthProvider>
+      <WorkoutProvider>
+        <TabLayout />
+      </WorkoutProvider>
+    </AuthProvider>
+  );
 }
